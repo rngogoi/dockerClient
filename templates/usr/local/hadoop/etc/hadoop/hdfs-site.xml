@@ -1,0 +1,109 @@
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    <property>
+        <description>
+            The actual address the RPC server will bind to. If this optional
+            address is set, it overrides only the hostname portion of
+            dfs.namenode.rpc-address. It can also be specified per name node or
+            name service for HA/Federation. This is useful for making the name
+            node listen on all interfaces by setting it to 0.0.0.0.
+        </description>
+        <name>dfs.namenode.rpc-bind-host</name>
+        <value>{{ .Env.HD_DFS_NAMENODE_RPC_BIND_HOST }}</value>
+    </property>
+    <property>
+        <description>The default block size for new files</description>
+        <name>dfs.blocksize</name>
+        <value>{{ .Env.HD_DFS_BLOCKSIZE }}</value>
+    </property>
+    <property>
+        <description>Minimum block size</description>
+        <name>dfs.namenode.fs-limits.min-block-size</name>
+        <value>{{ .Env.HD_DFS_NAMENODE_FS_LIMITS_MIN_BLOCK_SIZE }}</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>{{ .Env.HD_NAMENODE_HOSTNAME }}:50090</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:{{ .Env.HD_NAMENODE_NAME_DIR }}</value>
+    </property>
+    <property>
+        <name>fs.checkpoint.dir</name>
+        <value>file:{{ .Env.HD_CHECKPOINT_DIR }}</value>
+    </property>
+    <property>
+        <name>fs.checkpoint.edits.dir</name>
+        <value>file:{{ .Env.HD_CHECKPOINT_EDITS_DIR }}</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:{{ .Env.HD_DATANODE_DATA_DIR }}</value>
+    </property>
+    
+    <property>
+        <name>dfs.block.access.token.enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.namenode.keytab.file</name>
+        <value>{{ .Env.KRB_SERVICE_KEYTAB_FILE }}</value>
+    </property>
+    <property>
+        <name>dfs.namenode.kerberos.principal</name>
+        <value>hdfs/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    <property>
+        <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+        <value>HTTP/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    
+    <property>
+        <name>dfs.secondary.namenode.keytab.file</name>
+        <value>${dfs.namenode.keytab.file}</value>
+    </property>
+    <property>
+        <name>dfs.secondary.namenode.kerberos.principal</name>
+        <value>${dfs.namenode.kerberos.principal}</value>
+    </property>
+    <property>
+        <name>dfs.secondary.namenode.kerberos.internal.spnego.principal</name>
+        <value>${dfs.namenode.kerberos.internal.spnego.principal}</value>
+    </property>
+
+    <!-- Data Node -->
+    <property>
+        <name>dfs.data.transfer.protection</name>
+        <value>authentication</value>
+    </property>
+    <property>
+        <name>dfs.http.policy</name>
+        <value>HTTPS_ONLY</value>
+    </property>
+    <property>
+        <name>dfs.datanode.keytab.file</name>
+        <value>${dfs.namenode.keytab.file}</value>
+    </property>
+    <property>
+        <name>dfs.datanode.kerberos.principal</name>
+        <value>${dfs.namenode.kerberos.principal}</value>
+    </property>
+
+    <!-- WebHDFS -->
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.web.authentication.kerberos.keytab</name>
+        <value>${dfs.namenode.keytab.file}</value>
+    </property>
+    <property>
+        <name>dfs.web.authentication.kerberos.principal</name>
+        <value>${dfs.namenode.kerberos.internal.spnego.principal}</value>
+    </property>
+</configuration>

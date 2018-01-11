@@ -1,0 +1,109 @@
+<configuration>
+    <property>
+        <description>Host that resource manager binding to</description>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>{{ .Env.HD_YARN_RESOURCEMANAGER_HOSTNAME }}</value>
+    </property>
+    <property>
+        <description>The interface that resource manager bind to</description>
+        <name>yarn.resourcemanager.bind-host</name>
+        <value>{{ .Env.HD_YARN_RESOURCEMANAGER_BIND_HOST }}</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.container-executor.class</name>
+        <value>org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.linux-container-executor.group</name>
+        <value>{{ .Env.HADOOP_USER_GROUP }}</value>
+    </property>
+    <property>
+        <name>yarn.application.classpath</name>
+        {{ $dirs := split "etc/hadoop,share/hadoop/common/*,share/hadoop/common/lib/*,share/hadoop/hdfs/*,share/hadoop/hdfs/lib/*,share/hadoop/mapreduce/*,share/hadoop/mapreduce/lib/*,share/hadoop/yarn/*,share/hadoop/yarn/lib/*" "," }}
+        <value>
+        {{ range $dirs }}{{ $.Env.HADOOP_PREFIX }}/{{.}},{{end}}
+        </value>
+    </property>
+    <property>
+        <description>
+          Number of seconds after an application finishes before the nodemanager's
+          DeletionService will delete the application's localized file directory
+          and log directory.
+
+          To diagnose Yarn application problems, set this property's value large
+          enough (for example, to 600 = 10 minutes) to permit examination of these
+          directories. After changing the property's value, you must restart the
+          nodemanager in order for it to have an effect.
+
+          The roots of Yarn applications' work directories is configurable with
+          the yarn.nodemanager.local-dirs property (see below), and the roots
+          of the Yarn applications' log directories is configurable with the
+          yarn.nodemanager.log-dirs property (see also below).
+        </description>
+        <name>yarn.nodemanager.delete.debug-delay-sec</name>
+        <value>{{ .Env.HD_YARN_NODEMANAGER_DELETE_DEBUG_DELAY_SEC }}</value>
+    </property>
+    <property>
+        <description>Minimum limit of memory to allocate to each container request at the Resource Manager.</description>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>{{ .Env.HD_YARN_SCHEDULER_MINIMUM_ALLOCATION_MB }}</value>
+    </property>
+    <property>
+        <description>Maximum limit of memory to allocate to each container request at the Resource Manager.</description>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>{{ .Env.HD_YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB }}</value>
+    </property>
+    <property>
+        <description>Resource i.e. available physical memory, in MB, for given NodeManager</description>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>{{ .Env.HD_YARN_NODEMANAGER_RESOURCE_MEMORY_MB }}</value>
+    </property>
+    <property>
+        <description>Number of CPU cores that can be allocated for containers.</description>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>{{ .Env.HD_YARN_NODEMANAGER_RESOURCE_CPU_VCORES }}</value>
+    </property>
+    <property>
+        <description>Enable/Disable virtual memory checker</description>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>{{ .Env.HD_YARN_NODEMANAGER_VMEM_CHECK_ENABLED }}</value>
+    </property>
+    
+    <property>
+        <name>yarn.resourcemanager.principal</name>
+        <value>yarn/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.spnego-principal</name>
+        <value>HTTP/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.keytab</name>
+        <value>{{ .Env.KRB_SERVICE_KEYTAB_FILE }}</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.spnego-keytab-file</name>
+        <value>${yarn.resourcemanager.keytab}</value>
+    </property>
+
+    <property>
+        <name>yarn.nodemanager.principal</name>
+        <value>${yarn.resourcemanager.principal}</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.webapp.spnego-principal</name>
+        <value>${yarn.resourcemanager.webapp.spnego-principal}</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.keytab</name>
+        <value>${yarn.resourcemanager.keytab}</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.webapp.spnego-keytab-file</name>
+        <value>${yarn.resourcemanager.keytab}</value>
+    </property>
+</configuration>

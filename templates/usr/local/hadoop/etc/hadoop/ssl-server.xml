@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>ssl.server.truststore.location</name>
+        <value>/etc/security/keystore/hadoop.truststore</value>
+    </property>
+    <property>
+        <name>ssl.server.truststore.password</name>
+        <value>h@doop</value>
+    </property>
+    <property>
+        <name>ssl.server.truststore.reload.interval</name>
+        <value>100000</value>
+    </property>
+    <property>
+        <name>ssl.server.keystore.location</name>
+        <value>/etc/security/keystore/hadoop.keystore</value>
+    </property>
+    <property>
+        <name>ssl.server.keystore.password</name>
+        <value>h@doop</value>
+    </property>
+    <property>
+        <name>ssl.server.keystore.keypassword</name>
+        <value>h@doop</value>
+    </property>
+</configuration>

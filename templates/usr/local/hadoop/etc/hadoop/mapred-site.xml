@@ -1,0 +1,51 @@
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>{{ .Env.HD_MAPREDUCE_FRAMEWORK_NAME }}</value>
+    </property>
+    <property>
+        <name>mapreduce.map.memory.mb</name>
+        <value>{{ .Env.HD_MAPREDUCE_MAP_MEMORY_MB }}</value>
+    </property>
+    <property>
+        <name>mapreduce.map.java.opts</name>
+        <value>{{ .Env.HD_MAPREDUCE_MAP_JAVA_OPTS }}</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.memory.mb</name>
+        <value>{{ .Env.HD_MAPREDUCE_REDUCE_MEMORY_MB }}</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.java.opts</name>
+        <value>{{ .Env.HD_MAPREDUCE_REDUCE_JAVA_OPTS }}</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.resource.mb</name>
+        <value>{{ .Env.HD_YARN_APP_MAPREDUCE_AM_RESOURCE_MB }}</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.command-opts</name>
+        <value>{{ .Env.HD_YARN_APP_MAPREDUCE_AM_COMMAND_OPTS }}</value>
+    </property>
+    <property>
+        <name>mapreduce.task.io.sort.mb</name>
+        <value>{{ .Env.HD_MAPREDUCE_TASK_IO_SORT_MB }}</value>
+    </property>
+
+    <property>
+        <name>mapreduce.jobhistory.principal</name>
+        <value>mapred/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.spnego-principal</name>
+        <value>HTTP/hadoop@{{ .Env.KRB_DEFAULT_REALM }}</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.keytab</name>
+        <value>{{ .Env.KRB_SERVICE_KEYTAB_FILE }}</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.spnego-keytab-file</name>
+        <value>${mapreduce.jobhistory.keytab}</value>
+    </property>
+</configuration>

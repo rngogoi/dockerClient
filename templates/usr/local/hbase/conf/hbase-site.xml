@@ -1,0 +1,98 @@
+<configuration>
+    <property>
+      <name>hbase.cluster.distributed</name>
+      <value>true</value>
+    </property>
+    <property>
+      <name>hbase.zookeeper.quorum</name>
+      <value>{{ replace .Env.ZOOKEEPER_HOST "\"" "" -1 }}</value>
+    </property>
+    <property>
+      <name>zookeeper.session.timeout</name>
+      <value>{{ .Env.HBASE_ZOOKEEPER_SESSION_TIMEOUT }}</value>
+    </property>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://{{ .Env.HD_NAMENODE_HOSTNAME }}:9000/data/hbase</value>
+    </property>
+    <property>
+        <name>hbase.client.retries.number</name>
+        <value>{{ default .Env.HBASE_CLIENT_RETRIES_NUMBER "35" }}</value>
+    </property>
+    <property>
+        <name>zookeeper.recovery.retry</name>
+        <value>{{ default .Env.HBASE_ZOOKEEPER_RECOVERY_RETRY "0" }}</value>
+    </property>
+    <property>
+        <name>hbase.security.authentication</name>
+        <value>kerberos</value>
+    </property>
+    <property>
+        <name>hbase.security.authorization</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.coprocessor.region.classes</name>
+        <value>org.apache.hadoop.hbase.security.token.TokenProvider</value>
+    </property>
+    <property>
+        <name>hbase.master.kerberos.principal</name>
+        <value>{{ .Env.HBASE_KERBEROS_PRINCIPAL }}</value>
+    </property>
+    <property>
+        <name>hbase.master.keytab.file</name>
+        <value>{{ .Env.KRB_SERVICE_KEYTAB_FILE }}</value>
+    </property>
+    <property>
+        <name>hbase.thrift.keytab.file</name>
+        <value>${hbase.master.keytab.file}</value>
+    </property>
+    <property>
+        <name>hbase.thrift.kerberos.principal</name>
+        <value>${hbase.master.kerberos.principal}</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.kerberos.principal</name>
+        <value>${hbase.master.kerberos.principal}</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.keytab.file</name>
+        <value>${hbase.master.keytab.file}</value>
+    </property>
+    <property>
+        <name>hbase.rest.kerberos.principal</name>
+        <value>${hbase.master.kerberos.principal}</value>
+    </property>
+    <property>
+        <name>hbase.rest.keytab.file</name>
+        <value>${hbase.master.keytab.file}</value>
+    </property>
+    <property>
+        <name>hbase.master.port</name>
+        <value>{{ .Env.HBASE_MASTER_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.master.info.port</name>
+        <value>{{ .Env.HBASE_MASTER_INFO_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.port</name>
+        <value>{{ .Env.HBASE_REGIONSERVER_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.regionserver.info.port</name>
+        <value>{{ .Env.HBASE_REGIONSERVER_INFO_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.rest.port</name>
+        <value>{{ .Env.HBASE_REST_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.rest.info.port</name>
+        <value>{{ .Env.HBASE_REST_INFO_PORT }}</value>
+    </property>
+    <property>
+        <name>hbase.thrift.info.port</name>
+        <value>{{ .Env.HBASE_THRIFT_INFO_PORT }}</value>
+    </property>
+</configuration>
