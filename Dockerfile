@@ -82,3 +82,5 @@ COPY templates ${MY_TEMPLATE_DIR}
 COPY scripts/exec /usr/bin/
 
 WORKDIR ${HADOOP_PREFIX}
+
+CMD ["bash"]
