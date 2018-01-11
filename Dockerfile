@@ -76,7 +76,7 @@ ENV HADOOP_COMMON_HOME="${HADOOP_PREFIX}" \
     HD_DATANODE_DATA_DIR="${HD_DATA_DIR}/dn"
 
 COPY scripts/build /my_build
-RUN /my_build/install.sh && rm -rf /my_build
+#RUN /my_build/install.sh && rm -rf /my_build
 
 COPY templates ${MY_TEMPLATE_DIR}
 COPY scripts/exec /usr/bin/
